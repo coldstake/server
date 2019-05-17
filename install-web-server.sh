@@ -5,7 +5,7 @@ SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_DESC="12 months coldstake.co.in service"
 PRICE="15\.00"
 
-read -p "Which coin (bcc)? " coin
+read -p "Which coin (bitcoinc)? " coin
 read -p "Mainnet (m) or Testnet (t)? " net
 
 SERVER_NAME="${coin}.coldstake.co.in"
@@ -19,7 +19,7 @@ WEBFILE="https://github.com/coldstake/node.git"
 
 if [[ "$net" =~ ^([tT])+$ ]]; then
     case ${coin} in
-         bcc)
+         bitcoinc)
             apiport="38221";
             ;;
          *)
@@ -29,7 +29,7 @@ if [[ "$net" =~ ^([tT])+$ ]]; then
     esac
 else 
     case ${coin} in
-        bcc)
+        bitcoinc)
             apiport="37221";
             ;;
          *)
