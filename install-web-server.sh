@@ -405,7 +405,8 @@ sed -i "s/^\(\$service_desc='\).*/\1${SERVICE_DESC}';/" /home/${USER}/${SERVER_N
 wget ${COINSERVICEINSTALLER} -O /home/${USER}/install-coin.sh
 wget ${COINSERVICECONFIG} -O /home/${USER}/config-${coin}.sh
 chmod +x /home/${USER}/install-coin.sh
-/home/${USER}/install-coin.sh -f ${coin}
+cd home/${USER}/ 
+./install-coin.sh -f ${coin}
 
 # Display information
 echo "Website URL: "${DNS_NAME}
