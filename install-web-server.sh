@@ -5,6 +5,12 @@ SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_DESC="12 months coldstake.co.in service"
 PRICE="15\.00"
 
+if [ "$(id -u)" != "0" ]; then
+    echo -e "${RED}* Sorry, this script needs to be run as root. Do \"sudo su root\" and then re-run this script${NONE}"
+    exit 1
+    echo -e "${NONE}${GREEN}* All Good!${NONE}";
+fi
+
 read -p "Which coin (bitcoinc)? " coin
 read -p "Mainnet (m) or Testnet (t)? " net
 
