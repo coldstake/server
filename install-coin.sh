@@ -185,10 +185,8 @@ configureWallet() {
     echo
     echo -e "* Configuring wallet. Please wait..."
     cd /home/${NODE_USER}/
-    rpcuser=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
-    rpcpass=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
     sudo mkdir ${COINCORE}
-    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${rpcuser}\nrpcpassword=${rpcpass}\n\nstaking=1" > $COINCONFIG
+    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${RPCUSER}\nrpcpassword=${RPCPASS}\n\nstaking=1${COINCONF}" > $COINCONFIG
     sudo mv $COINCONFIG $COINCORE
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
