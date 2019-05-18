@@ -161,8 +161,8 @@ mkdir $COINDLOC
 #echo 'Downloading and extract wallet files'
 wget -qO- $COINGITHUB | tar xvz - -C $COINDSRC &>> ${SCRIPT_LOGFILE}
 # Extract the files and give executable permissions
-cp $COINDSRC/bitcoinc-1.0.0.0/bin/bitcoincd $COINDLOC
-cp $COINDSRC/bitcoinc-1.0.0.0/bin/bitcoinc-cli $COINDLOC
+cp ${COINDSRC}/bitcoinc-1.0.0.0/bin/bitcoincd $COINDLOC
+cp ${COINDSRC}/bitcoinc-1.0.0.0/bin/bitcoinc-cli $COINDLOC
 chmod a+x $COINDLOC/${FORK}d $COINDLOC/${FORK}-cli
 rm -rf $COINDSRC &>> ${SCRIPT_LOGFILE} 	   ### Remove source
 echo -e "${NONE}${GREEN}* Done${NONE}";

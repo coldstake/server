@@ -21,7 +21,7 @@ function setGeneralVars() {
 ## set general variables
 #COINGITHUB=https://github.com/Bitcoin-Confidential/BitcoinC-Core.git
 COINGITHUB=https://github.com/Bitcoin-Confidential/BitcoinC-Core/releases/download/v1.0.0/bitcoinc-1.0.0.0-x86_64-linux-gnu.tar.gz
-COINDSRC=/home/${NODE_USER}/code/
+COINDSRC=/home/${NODE_USER}/code
 CONF=release
 COINDAEMON=${FORK}d
 COINCONFIG=${FORK}.conf
