@@ -1,23 +1,28 @@
 #!/bin/bash
 # =================== YOUR DATA ========================
-WEBSERVERBASHFILE="bash <( curl -s https://raw.githubusercontent.com/trustaking/server/master/reinstall-web.sh )"
+WEBSERVERBASHFILE="bash <( curl -s https://raw.githubusercontent.com/coldstake/server/master/reinstall-web.sh )"
 SERVER_IP=$(curl --silent ipinfo.io/ip)
-SERVICE_DESC="12 months Trustaking service"
+SERVICE_DESC="12 months coldstake.co.in service"
 PRICE="15\.00"
-# =================== YOUR DATA ========================
 
-read -p "Which Fork (redstone, x42, impleum, city, stratis)? " fork
+if [ "$(id -u)" != "0" ]; then
+    echo -e "${RED}* Sorry, this script needs to be run as root. Do \"sudo su root\" and then re-run this script${NONE}"
+    exit 1
+    echo -e "${NONE}${GREEN}* All Good!${NONE}";
+fi
+
+read -p "Which coin (bitcoinc)? " coin
 read -p "Mainnet (m) or Testnet (t)? " net
 
-SERVER_NAME="$fork.trustaking.com"
+SERVER_NAME="${coin}.coldstake.co.in"
 REDIRECTURL="http:\/\/${SERVER_NAME}\/activate.php"
-DNS_NAME="$fork.trustaking.com"
-USER="$fork-web"
-SUDO_PASSWORD="$fork-web"
-MYSQL_ROOT_PASSWORD="$fork-web"
-COINSERVICEINSTALLER="https://raw.githubusercontent.com/trustaking/server-install/master/install-fork.sh"
-COINSERVICECONFIG="https://raw.githubusercontent.com/trustaking/server-install/master/config/config-$fork.sh"
-WEBFILE="https://github.com/trustaking/trustaking-server.git"
+DNS_NAME="${coin}.coldstake.co.in"
+USER="${coin}-web"
+SUDO_PASSWORD="${coin}-web"
+MYSQL_ROOT_PASSWORD="${coin}-web"
+COINSERVICEINSTALLER="https://raw.githubusercontent.com/coldstake/server/master/install-coin.sh"
+COINSERVICECONFIG="https://raw.githubusercontent.com/coldstake/server/master/config/config-${coin}.sh"
+WEBFILE="https://github.com/coldstake/node.git"
 
 if [[ "$net" =~ ^([tT])+$ ]]; then
     case $fork in
@@ -71,8 +76,9 @@ if [[ "$response" =~ ^([yY])+$ ]]; then
     DNS_NAME=$(curl --silent ipinfo.io/ip)
 fi
 
-# Re-Install Website
+# Remove Website
 rm -rf /home/${USER}/${SERVER_NAME}
+# Install Website
 mkdir /home/${USER}/${SERVER_NAME}
 cd /home/${USER}/
 git clone ${WEBFILE} ${SERVER_NAME}
@@ -82,18 +88,11 @@ chmod g+s /home/${USER}/${SERVER_NAME} -R
 cd /home/${USER}/${SERVER_NAME}
 php /usr/local/bin/composer require trustaking/btcpayserver-php-client:dev-master
 ## Inject apiport & ticker into /include/config.php
-sed -i "s/^\(\$ticker='\).*/\1${fork}';/" /home/${USER}/${SERVER_NAME}/include/config.php
+sed -i "s/^\(\$ticker='\).*/\1${coin}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$api_port='\).*/\1${apiport}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$price='\).*/\1${PRICE}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$redirectURL='\).*/\1${REDIRECTURL}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$service_desc='\).*/\1${SERVICE_DESC}';/" /home/${USER}/${SERVER_NAME}/include/config.php
-
-## Inject apiport into /scripts/trustaking-*.sh files
-sed -i "s/^\(apiport=\).*/\1$apiport/" /home/${USER}/${SERVER_NAME}/scripts/trustaking-cold-wallet-add-funds.sh
-sed -i "s/^\(apiport=\).*/\1$apiport/" /home/${USER}/${SERVER_NAME}/scripts/trustaking-cold-wallet-balance.sh
-sed -i "s/^\(apiport=\).*/\1$apiport/" /home/${USER}/${SERVER_NAME}/scripts/trustaking-cold-wallet-setup.sh
-sed -i "s/^\(apiport=\).*/\1$apiport/" /home/${USER}/${SERVER_NAME}/scripts/trustaking-cold-wallet-withdraw-funds.sh
-sed -i "s/^\(apiport=\).*/\1$apiport/" /home/${USER}/${SERVER_NAME}/scripts/hot-wallet-setup.sh
 
 # Display information
 
