@@ -12,7 +12,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 read -p "Which coin (bitcoinc)? " coin
-read -p "Mainnet (m) or Testnet (t)? " net
+read -p "Mainnet (m) or Testnet (t)? " NET
 
 SERVER_NAME="${coin}.coldstake.co.in"
 REDIRECTURL="http:\/\/${SERVER_NAME}\/activate.php"

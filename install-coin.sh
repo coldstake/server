@@ -15,7 +15,7 @@ DATE_STAMP="$(date +%y-%m-%d-%s)"
 SCRIPT_LOGFILE="/tmp/${NODE_USER}_${DATE_STAMP}_output.log"
 NODE_IP=$(curl --silent ipinfo.io/ip)
 
-usage() { echo "Usage: $0 [-f coin name] [-u rpc username] [-p rpc password] [-n (m/t/u) main, test or upgrade" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-f coin name] [-u rpc username] [-p rpc password] [-n (m/t/u) main, test or upgrade]" 1>&2; exit 1; }
 
 while getopts ":f:u:p:n:" option; do
     case "${option}" in
@@ -245,7 +245,7 @@ echo -e "${BOLD}"
     check_root
 
 echo -e "${BOLD}"
-//read -p " Do you want to setup on Mainnet (m), Testnet (t) or upgrade (u) your ${FORK} full node. (m/t/u)?" NET
+#read -p " Do you want to setup on Mainnet (m), Testnet (t) or upgrade (u) your ${FORK} full node. (m/t/u)?" NET
 
 if [[ "$NET" =~ ^([mM])+$ ]]; then
     setMainVars
