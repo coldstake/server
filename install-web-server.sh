@@ -58,7 +58,7 @@ fi
 PUBLIC_SSH_KEYS=""
 
 # if vps not contains swap file - create it
-SWAP_SIZE="1G"
+SWAP_SIZE="2G"
 
 TIMEZONE="Etc/GMT+0" # list of avaiable timezones: ls -R --group-directories-first /usr/share/zoneinfo
 
@@ -202,14 +202,14 @@ service supervisor start
 
 # Configure Swap Disk
 
-if [ -f /swapfile ]; then
+if [ -f /var/node_swap.img ]; then
     echo "Swap exists."
 else
-    fallocate -l $SWAP_SIZE /swapfile
-    chmod 600 /swapfile
-    mkswap /swapfile
-    swapon /swapfile
-    echo "/swapfile none swap sw 0 0" >> /etc/fstab
+    fallocate -l $SWAP_SIZE /var/node_swap.img
+    chmod 600 /var/node_swap.img
+    mkswap /var/node_swap.img
+    swapon /var/node_swap.img
+    echo "/var/node_swap.img none swap sw 0 0" >> /etc/fstab
     echo "vm.swappiness=30" >> /etc/sysctl.conf
     echo "vm.vfs_cache_pressure=50" >> /etc/sysctl.conf
 fi
