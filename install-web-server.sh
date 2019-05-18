@@ -419,7 +419,7 @@ wget ${COINSERVICEINSTALLER} -O /home/${USER}/install-coin.sh
 wget ${COINSERVICECONFIG} -O /home/${USER}/config-${coin}.sh
 chmod +x /home/${USER}/install-coin.sh
 cd /home/${USER}/
-./install-coin.sh -f ${coin} -u ${RPCUSER} -p ${RPCPASS}
+./install-coin.sh -f ${coin} -u ${RPCUSER} -p ${RPCPASS} -n ${NET}
 
 # Display information
 echo "Website URL: "${DNS_NAME}

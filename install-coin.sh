@@ -15,13 +15,14 @@ DATE_STAMP="$(date +%y-%m-%d-%s)"
 SCRIPT_LOGFILE="/tmp/${NODE_USER}_${DATE_STAMP}_output.log"
 NODE_IP=$(curl --silent ipinfo.io/ip)
 
-usage() { echo "Usage: $0 [-f coin name] [-u rpc username] [-p rpc password]" 1>&2; exit 1; }
+usage() { echo "Usage: $0 [-f coin name] [-u rpc username] [-p rpc password] [-n (m/t/u) main, test or upgrade" 1>&2; exit 1; }
 
-while getopts ":f:u:p" option; do
+while getopts ":f:u:p:n:" option; do
     case "${option}" in
         f) FORK=${OPTARG};;
         u) RPCUSER=${OPTARG};;
         p) RPCPASS=${OPTARG};;
+        n) NET=${OPTARG};;
         *) usage ;;
     esac
 done
@@ -190,7 +191,7 @@ configureWallet() {
     echo -e "* Configuring wallet. Please wait..."
     cd /home/${NODE_USER}/
     sudo mkdir ${COINCORE}
-    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${RPCUSER}\nrpcpassword=${RPCPASS}\n\nstaking=1${COINCONF}" > $COINCONFIG
+    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${RPCUSER}\nrpcpassword=${RPCPASS}\nstaking=1\n${COINCONF}" > $COINCONFIG
     sudo mv $COINCONFIG $COINCORE
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
@@ -244,9 +245,9 @@ echo -e "${BOLD}"
     check_root
 
 echo -e "${BOLD}"
-read -p " Do you want to setup on Mainnet (m), Testnet (t) or upgrade (u) your ${FORK} full node. (m/t/u)?" response
+//read -p " Do you want to setup on Mainnet (m), Testnet (t) or upgrade (u) your ${FORK} full node. (m/t/u)?" NET
 
-if [[ "$response" =~ ^([mM])+$ ]]; then
+if [[ "$NET" =~ ^([mM])+$ ]]; then
     setMainVars
     setGeneralVars
     echo -e "${BOLD} The log file can be monitored here: ${SCRIPT_LOGFILE}${NONE}"
@@ -271,7 +272,7 @@ echo -e "${GREEN} Installation complete. Check service with: journalctl -f -u ${
 echo -e "${GREEN} thecrypt0hunter(2019)${NONE}"
 
  else
-    if [[ "$response" =~ ^([tT])+$ ]]; then
+    if [[ "$NET" =~ ^([tT])+$ ]]; then
         setTestVars
         setGeneralVars
         echo -e "${BOLD} The log file can be monitored here: ${SCRIPT_LOGFILE}${NONE}"
@@ -295,7 +296,7 @@ echo
 echo -e "${GREEN} Installation complete. Check service with: journalctl -f -u ${COINSERVICENAME} ${NONE}"
 echo -e "${GREEN} thecrypt0hunter(2019)${NONE}"
  else
-    if [[ "$response" =~ ^([uU])+$ ]]; then
+    if [[ "$NET" =~ ^([uU])+$ ]]; then
         check_root
         ##TODO: Test for servicefile and only upgrade as required 
         #Stop Test Service

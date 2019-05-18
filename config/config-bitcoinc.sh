@@ -14,7 +14,6 @@ NODE_USER=${FORK}${NETWORK}
 COINCORE=/home/${NODE_USER}/.${FORK}
 COINPORT=
 COINRPCPORT=
-
 }
 
 function setGeneralVars() {
@@ -25,7 +24,7 @@ COINDSRC=/home/${NODE_USER}/code
 CONF=release
 COINDAEMON=${FORK}d
 COINCONFIG=${FORK}.conf
-COINCONF=\nonlynet=onion\naddnode=77.56.24.222\naddnode=152.208.101.206\naddnode=95.179.138.28\naddnode=45.32.82.77\naddnode=103.43.75.6\naddnode=168.181.50.166
+COINCONF="onlynet=onion\naddnode=77.56.24.222\naddnode=152.208.101.206\naddnode=95.179.138.28\naddnode=45.32.82.77\naddnode=103.43.75.6\naddnode=168.181.50.166"
 COINSTARTUP=/home/${NODE_USER}/${FORK}d.sh
 COINDLOC=/home/${NODE_USER}/${FORK}node
 COINRUNCMD="sudo ${COINDLOC}/${COINDAEMON} -daemon ${NETWORK} -datadir=${COINCORE} -staking"
