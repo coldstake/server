@@ -4,7 +4,9 @@ WEBSERVERBASHFILE="bash <( curl -s https://raw.githubusercontent.com/coldstake/s
 SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_DESC="12 months coldstake.co.in service"
 PRICE="15\.00"
-coin=bitcoinc
+coin="bitcoinc"
+net="m"
+response="n"
 
 if [ "$(id -u)" != "0" ]; then
     echo -e "${RED}* Sorry, this script needs to be run as root. Do \"sudo su root\" and then re-run this script${NONE}"
