@@ -15,13 +15,17 @@ DATE_STAMP="$(date +%y-%m-%d-%s)"
 SCRIPT_LOGFILE="/tmp/${NODE_USER}_${DATE_STAMP}_output.log"
 NODE_IP=$(curl --silent ipinfo.io/ip)
 
-while getopts f: option
-do
-case "${option}"
-in
-f) FORK=${OPTARG};;
-esac
+usage() { echo "Usage: $0 [-f coin name] [-u rpc username] [-p rpc password]" 1>&2; exit 1; }
+
+while getopts ":f:u:p" option do
+    case "${option}" in
+        f) FORK=${OPTARG};;
+        u) RPCUSER=${OPTARG};;
+        p) RPCPASS=${OPTARG};;
+        *) usage ;;
+    esac
 done
+shift "$((OPTIND-1))"
 
 source config-${FORK}.sh
 

@@ -23,11 +23,13 @@ MYSQL_ROOT_PASSWORD="${coin}-web"
 COINSERVICEINSTALLER="https://raw.githubusercontent.com/coldstake/server/master/install-coin.sh"
 COINSERVICECONFIG="https://raw.githubusercontent.com/coldstake/server/master/config/config-${coin}.sh"
 WEBFILE="https://github.com/coldstake/node.git"
+RPCUSER=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
+RPCPASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
 
 if [[ "$net" =~ ^([tT])+$ ]]; then
     case ${coin} in
          bitcoinc)
-            apiport="38221";
+            apiport="9790";
             ;;
          *)
            echo "${coin} has not been configured."
@@ -37,7 +39,7 @@ if [[ "$net" =~ ^([tT])+$ ]]; then
 else 
     case ${coin} in
         bitcoinc)
-            apiport="37221";
+            apiport="9790";
             ;;
          *)
             echo "${coin} has not been configured."
@@ -403,19 +405,21 @@ cd /home/${USER}/${SERVER_NAME}
 php /usr/local/bin/composer require trustaking/btcpayserver-php-client:dev-master
 ## Inject apiport & ticker into /include/config.php
 sed -i "s/^\(\$ticker='\).*/\1${coin}';/" /home/${USER}/${SERVER_NAME}/include/config.php
-sed -i "s/^\(\$api_port='\).*/\1${apiport}';/" /home/${USER}/${SERVER_NAME}/include/config.php
+sed -i "s/^\(\$server_port='\).*/\1${apiport}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$price='\).*/\1${PRICE}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$redirectURL='\).*/\1${REDIRECTURL}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$service_desc='\).*/\1${SERVICE_DESC}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 
-#TODO:Inject RPC username & password into config.php
+#Inject RPC username & password into config.php
+sed -i "s/^\(\$rpc_user='\).*/\1${RPCUSER}';/" /home/${USER}/${SERVER_NAME}/include/config.php
+sed -i "s/^\(\$rpc_pass='\).*/\1${RPCPASS}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 
 # Install Coins Service
 wget ${COINSERVICEINSTALLER} -O /home/${USER}/install-coin.sh
 wget ${COINSERVICECONFIG} -O /home/${USER}/config-${coin}.sh
 chmod +x /home/${USER}/install-coin.sh
 cd /home/${USER}/
-./install-coin.sh -f ${coin}
+./install-coin.sh -f ${coin} -u ${RPCUSER} -p ${RPCPASS}
 
 # Display information
 echo "Website URL: "${DNS_NAME}
