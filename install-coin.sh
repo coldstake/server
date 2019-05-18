@@ -188,7 +188,7 @@ configureWallet() {
     rpcuser=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
     rpcpass=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
     sudo mkdir ${COINCORE}
-    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${rpcuser}\nrpcpassword=${rpcpass}\nstaking=1" > $COINCONFIG
+    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${rpcuser}\nrpcpassword=${rpcpass}\n\nstaking=1" > $COINCONFIG
     sudo mv $COINCONFIG $COINCORE
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
@@ -198,6 +198,8 @@ startWallet() {
     echo -e "* Starting wallet daemon...${COINSERVICENAME}"
     sudo service ${COINSERVICENAME} start &>> ${SCRIPT_LOGFILE}
     sleep 2
+    # start staking
+    sudo /home/bitcoinc/bitcoincnode/bitcoinc-cli -datadir=/home/bitcoinc/.bitcoinc walletsettings stakingstatus true
     echo -e "${GREEN}* Done${NONE}";
 }
 stopWallet() {
