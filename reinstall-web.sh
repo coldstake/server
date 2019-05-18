@@ -33,7 +33,7 @@ if [[ "$net" =~ ^([tT])+$ ]]; then
             apiport="38221";
             ;;
          *)
-           echo "${coin} has not been configured."
+           echo "${coin} has not been configured for testnet."
            exit
            ;;
     esac
@@ -43,7 +43,7 @@ else
             apiport="37221";
             ;;
          *)
-            echo "${coin} has not been configured."
+            echo "${coin} has not been configured for mainnet."
             exit
             ;;
     esac
