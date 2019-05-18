@@ -201,6 +201,7 @@ startWallet() {
     echo -e "* Starting wallet daemon...${COINSERVICENAME}"
     sudo service ${COINSERVICENAME} start &>> ${SCRIPT_LOGFILE}
     sleep 2
+    ${COINDLOC}=/${FORK}-cli -datadir=${COINCORE} walletsettings stakingstatus true
     echo -e "${GREEN}* Done${NONE}";
 }
 stopWallet() {
