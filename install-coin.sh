@@ -155,11 +155,10 @@ function compileWallet() {
 echo
 echo -e "* Compiling wallet. Please wait, this might take a while to complete..."
 cd /home/${NODE_USER}/
-mkdir $COINDSRC
-mkdir $COINDLOC
-# Downloading the wallet
-#echo 'Downloading and extract wallet files'
-wget -qO- $COINGITHUB | tar xvz - -C $COINDSRC &>> ${SCRIPT_LOGFILE}
+sudo mkdir $COINDSRC
+sudo mkdir $COINDLOC
+# Downloading and extract wallet files
+wget -qO- ${COINGITHUB} | tar xvz -C ${COINDSRC} &>> ${SCRIPT_LOGFILE}
 # Extract the files and give executable permissions
 cp ${COINDSRC}/bitcoinc-1.0.0.0/bin/bitcoincd $COINDLOC
 cp ${COINDSRC}/bitcoinc-1.0.0.0/bin/bitcoinc-cli $COINDLOC
