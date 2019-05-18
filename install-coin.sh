@@ -155,14 +155,16 @@ function compileWallet() {
 echo
 echo -e "* Compiling wallet. Please wait, this might take a while to complete..."
 cd /home/${NODE_USER}/
+mkdir $COINDSRC
+mkdir $COINDLOC
 # Downloading the wallet
 #echo 'Downloading and extract wallet files'
-wget "https://github.com/Bitcoin-Confidential/BitcoinC-Core/releases/download/v1.0.0/bitcoinc-1.0.0.0-x86_64-linux-gnu.tar.gz" -O - | tar -xz
+wget -qO- $COINGITHUB | tar xvz - -C $COINDSRC &>> ${SCRIPT_LOGFILE}
 # Extract the files and give executable permissions
-cp bitcoinc-1.0.0.0/bin/bitcoincd /home/${NODE_USER}/ 
-cp bitcoinc-1.0.0.0/bin/bitcoinc-cli /home/${NODE_USER}/
-chmod a+x /home/${NODE_USER}/${FORK}d /home/${NODE_USER}/${FORK}-cli
-#rm -rf /home/${NODE_USER}/code &>> ${SCRIPT_LOGFILE} 	   ### Remove source
+cp $COINDSRC/bitcoinc-1.0.0.0/bin/bitcoincd $COINDLOC
+cp $COINDSRC/bitcoinc-1.0.0.0/bin/bitcoinc-cli $COINDLOC
+chmod a+x $COINDLOC/${FORK}d $COINDLOC/${FORK}-cli
+rm -rf $COINDSRC &>> ${SCRIPT_LOGFILE} 	   ### Remove source
 echo -e "${NONE}${GREEN}* Done${NONE}";
 }
 
@@ -186,8 +188,8 @@ configureWallet() {
     cd /home/${NODE_USER}/
     rpcuser=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
     rpcpass=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
-    sudo mkdir -p $COINCORE
-    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${rpcuser}\nrpcpassword=${rpcpass}" > $COINCONFIG
+    sudo mkdir ${COINCORE}
+    echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${rpcuser}\nrpcpassword=${rpcpass}\nstaking=1" > $COINCONFIG
     sudo mv $COINCONFIG $COINCORE
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
