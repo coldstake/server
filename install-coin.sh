@@ -155,8 +155,8 @@ function compileWallet() {
 echo
 echo -e "* Compiling wallet. Please wait, this might take a while to complete..."
 cd /home/${NODE_USER}/
-sudo mkdir $COINDSRC
-sudo mkdir $COINDLOC
+sudo mkdir ${COINDSRC}
+sudo mkdir ${COINDLOC}
 # Downloading and extract wallet files
 wget -qO- ${COINGITHUB} | tar xvz -C ${COINDSRC} &>> ${SCRIPT_LOGFILE}
 # Extract the files and give executable permissions
