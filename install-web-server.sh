@@ -15,6 +15,7 @@ read -p "Which coin (bitcoinc)? " coin
 read -p "Mainnet (m) or Testnet (t)? " net
 
 SERVER_NAME="${coin}.coldstake.co.in"
+REDIRECTURL="http:\/\/${SERVER_NAME}\/activate.php"
 DNS_NAME="${coin}.coldstake.co.in"
 USER="${coin}-web"
 SUDO_PASSWORD="${coin}-web"
@@ -406,6 +407,8 @@ sed -i "s/^\(\$api_port='\).*/\1${apiport}';/" /home/${USER}/${SERVER_NAME}/incl
 sed -i "s/^\(\$price='\).*/\1${PRICE}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$redirectURL='\).*/\1${REDIRECTURL}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$service_desc='\).*/\1${SERVICE_DESC}';/" /home/${USER}/${SERVER_NAME}/include/config.php
+
+#TODO:Inject RPC username & password into config.php
 
 # Install Coins Service
 wget ${COINSERVICEINSTALLER} -O /home/${USER}/install-coin.sh
