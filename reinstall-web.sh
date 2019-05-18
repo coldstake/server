@@ -25,46 +25,22 @@ COINSERVICECONFIG="https://raw.githubusercontent.com/coldstake/server/master/con
 WEBFILE="https://github.com/coldstake/node.git"
 
 if [[ "$net" =~ ^([tT])+$ ]]; then
-    case $fork in
-         stratis)
-            apiport="38221"; # "37221" <Main Stratis
-            ;;
-         redstone)
-            apiport="38222"; # "37222" <Main Redstone
-            ;;
-        x42)
-           apiport="42221"; # "42220" <Main X42
-           ;;
-        city)
-           apiport="24335"; # "4335" <Main City
-        ;; 
-        impleum)
-           apiport="38222"; # "39222" <Main Impleum
+    case ${coin} in
+         bitcoinc)
+            apiport="38221";
             ;;
          *)
-           echo "$fork has not been configured."
+           echo "${coin} has not been configured."
            exit
            ;;
     esac
 else 
-    case $fork in
-        stratis)
+    case ${coin} in
+        bitcoinc)
             apiport="37221";
             ;;
-         redstone)
-            apiport="37222";
-            ;;
-         x42)
-            apiport="42220";
-            ;;
-         city)
-            apiport="4335";
-            ;; 
-         impleum)
-            apiport="39222";
-            ;;
          *)
-            echo "$fork has not been configured."
+            echo "${coin} has not been configured."
             exit
             ;;
     esac
