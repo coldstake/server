@@ -4,7 +4,7 @@ WEBSERVERBASHFILE="bash <( curl -s https://raw.githubusercontent.com/coldstake/s
 SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_DESC="12 months coldstake.co.in service"
 PRICE="15\.00"
-
+# =================== YOUR DATA ========================
 if [ "$(id -u)" != "0" ]; then
     echo -e "${RED}* Sorry, this script needs to be run as root. Do \"sudo su root\" and then re-run this script${NONE}"
     exit 1
@@ -13,7 +13,7 @@ fi
 
 read -p "Which coin (bitcoinc)? " coin
 read -p "Mainnet (m) or Testnet (t)? " NET
-
+# =================== YOUR DATA ========================
 SERVER_NAME="${coin}.coldstake.co.in"
 REDIRECTURL="http:\/\/${SERVER_NAME}\/activate.php"
 DNS_NAME="${coin}.coldstake.co.in"
@@ -47,7 +47,7 @@ else
             ;;
     esac
 fi
-
+# =================== YOUR DATA ========================
 read -p "Are you using IP(y) or DNS(n)?" response
 
 if [[ "$response" =~ ^([yY])+$ ]]; then
@@ -422,6 +422,7 @@ cd /home/${USER}/
 ./install-coin.sh -f ${coin} -u ${RPCUSER} -p ${RPCPASS} -n ${NET}
 
 # Display information
+echo
 echo "Website URL: "${DNS_NAME}
-sud0 mkdir /var/secure 
+sudo mkdir /var/secure 
 echo "Requires keys.php, btcpayserver.pri & pub in /var/secure/ - run transfer.sh"
