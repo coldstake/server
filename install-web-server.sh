@@ -3,7 +3,7 @@
 WEBSERVERBASHFILE="bash <( curl -s https://raw.githubusercontent.com/coldstake/server/master/install-web-server.sh )"
 SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_DESC="12 months coldstake.co.in service"
-SERVICE_END_DATE="strtotime(\"2020-05-31\")"
+SERVICE_END_DATE="2020-05-31"
 ONLINE_DAYS=365
 PRICE="15\.00"
 # =================== YOUR DATA ========================
