@@ -3,6 +3,8 @@
 WEBSERVERBASHFILE="bash <( curl -s https://raw.githubusercontent.com/coldstake/server/master/install-web-server.sh )"
 SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_DESC="12 months coldstake.co.in service"
+SERVICE_END_DATE="strtotime(\"2020-05-31\")"
+ONLINE_DAYS=365
 PRICE="15\.00"
 # =================== YOUR DATA ========================
 if [ "$(id -u)" != "0" ]; then
@@ -409,6 +411,8 @@ sed -i "s/^\(\$server_port='\).*/\1${apiport}';/" /home/${USER}/${SERVER_NAME}/i
 sed -i "s/^\(\$price='\).*/\1${PRICE}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$redirectURL='\).*/\1${REDIRECTURL}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 sed -i "s/^\(\$service_desc='\).*/\1${SERVICE_DESC}';/" /home/${USER}/${SERVER_NAME}/include/config.php
+sed -i "s/^\(\$service_end_date='\).*/\1${SERVICE_END_DATE}';/" /home/${USER}/${SERVER_NAME}/include/config.php
+sed -i "s/^\(\$$online_days='\).*/\1${ONLINE_DAYS}';/" /home/${USER}/${SERVER_NAME}/include/config.php
 
 #Inject RPC username & password into config.php
 sed -i "s/^\(\$rpc_user='\).*/\1${RPCUSER}';/" /home/${USER}/${SERVER_NAME}/include/config.php
