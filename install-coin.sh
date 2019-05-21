@@ -173,7 +173,7 @@ rm -rf $COINDSRC &>> ${SCRIPT_LOGFILE} 	   ### Remove source
 echo -e "${NONE}${GREEN}* Done${NONE}";
 }
 
-installWallet() {
+function installWallet() {
     echo
     echo -e "* Installing wallet. Please wait..."
     cd /home/${NODE_USER}/
@@ -187,7 +187,7 @@ installWallet() {
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
 
-configureWallet() {
+function configureWallet() {
     echo
     echo -e "* Configuring wallet. Please wait..."
     cd /home/${NODE_USER}/
@@ -197,7 +197,7 @@ configureWallet() {
     echo -e "${NONE}${GREEN}* Done${NONE}";
 }
 
-startWallet() {
+function startWallet() {
     echo
     echo -e "* Starting wallet daemon...${COINSERVICENAME}"
     sudo service ${COINSERVICENAME} start &>> ${SCRIPT_LOGFILE}
@@ -205,7 +205,7 @@ startWallet() {
     ${COINDLOC}/${FORK}-cli -datadir=${COINCORE} walletsettings stakingstatus true
     echo -e "${GREEN}* Done${NONE}";
 }
-stopWallet() {
+function stopWallet() {
     echo
     echo -e "* Stopping wallet daemon...${COINSERVICENAME}"
     sudo service ${COINSERVICENAME} stop &>> ${SCRIPT_LOGFILE}
@@ -227,7 +227,7 @@ function installUnattendedUpgrades() {
     echo -e "${GREEN}* Done${NONE}";
 }
 
-displayServiceStatus() {
+function displayServiceStatus() {
 	echo
 	echo
 	on="${GREEN}ACTIVE${NONE}"
