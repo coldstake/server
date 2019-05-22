@@ -29,5 +29,4 @@ cd /home/${USER}/
 # Display information
 echo
 echo "Website URL: "${DNS_NAME}
-sudo mkdir /var/secure 
 echo "Requires keys.php, btcpayserver.pri & pub in /var/secure/ - run transfer.sh"

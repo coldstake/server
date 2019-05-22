@@ -201,11 +201,19 @@ function startWallet() {
     echo
     echo -e "* Starting wallet daemon...${COINSERVICENAME}"
     sudo service ${COINSERVICENAME} start &>> ${SCRIPT_LOGFILE}
-    sleep 10
-    ${COINDLOC}/${FORK}-cli -datadir=${COINCORE} extkeyimportmaster "$(${COINDLOC}/${FORK}-cli -datadir=${COINCORE} mnemonic new | grep mnemonic | sed -e 's/.*: "//' -e 's/",//')"
-    ${COINDLOC}/${FORK}-cli -datadir=${COINCORE} walletsettings stakingstatus true
     echo -e "${GREEN}* Done${NONE}";
 }
+
+function createWallet() {
+    sleep 10
+    ${COINDLOC}/${FORK}-cli -datadir=${COINCORE} extkeyimportmaster "$(${COINDLOC}/${FORK}-cli -datadir=${COINCORE} mnemonic new | grep mnemonic | sed -e 's/.*: "//' -e 's/",//')"
+}
+
+function startStaking() {
+    sleep 10
+    ${COINDLOC}/${FORK}-cli -datadir=${COINCORE} walletsettings stakingstatus true
+}
+
 function stopWallet() {
     echo
     echo -e "* Stopping wallet daemon...${COINSERVICENAME}"
@@ -267,6 +275,8 @@ if [[ "$NET" =~ ^([mM])+$ ]]; then
     configureWallet
     installUnattendedUpgrades
     startWallet
+    createWallet
+    startStaking
     set_permissions
     displayServiceStatus
 
@@ -292,6 +302,8 @@ echo -e "${GREEN} thecrypt0hunter(2019)${NONE}"
         configureWallet 
         installUnattendedUpgrades
         startWallet
+        createWallet
+        startStaking
         set_permissions
         displayServiceStatus
 	
@@ -302,13 +314,16 @@ echo -e "${GREEN} thecrypt0hunter(2019)${NONE}"
     if [[ "$NET" =~ ^([uU])+$ ]]; then
         check_root
         ##TODO: Setup for testnet 
-        ##Stop Main Service
+        ##Upgrade Main Service
         setMainVars
         setGeneralVars
         updateAndUpgrade
         stopWallet
         compileWallet
         startWallet
+        #createWallet
+        startStaking
+        displayServiceStatus
         echo -e "${GREEN} thecrypt0hunter 2019${NONE}"
     else
       echo && echo -e "${RED} Installation cancelled! ${NONE}" && echo
