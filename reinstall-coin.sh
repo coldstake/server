@@ -13,15 +13,11 @@ read -p "Mainnet (m), Testnet (t) or Upgrade (u)? " NET
 # =================== YOUR DATA ========================
 USER="${coin}-web"
 COINSERVICEINSTALLER="https://raw.githubusercontent.com/coldstake/server/master/install-coin.sh"
-COINSERVICECONFIG="https://raw.githubusercontent.com/coldstake/server/master/config/config-${coin}.sh"RPCUSER=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
+COINSERVICECONFIG="https://raw.githubusercontent.com/coldstake/server/master/config/config-${coin}.sh"
+RPCUSER=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
 RPCPASS=`cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1`
 SERVER_IP=$(curl --silent ipinfo.io/ip)
 # =================== YOUR DATA ========================
-read -p "Are you using IP(y) or DNS(n)?" response
-
-if [[ "$response" =~ ^([yY])+$ ]]; then
-    DNS_NAME=$(curl --silent ipinfo.io/ip)
-fi
 
 # Install Coins Service
 wget ${COINSERVICEINSTALLER} -O /home/${USER}/install-coin.sh
