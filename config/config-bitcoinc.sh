@@ -19,7 +19,8 @@ COINRPCPORT=
 function setGeneralVars() {
 ## set general variables
 #COINGITHUB=https://github.com/Bitcoin-Confidential/BitcoinC-Core.git
-COINGITHUB=https://github.com/Bitcoin-Confidential/BitcoinC-Core/releases/download/v1.0.0/bitcoinc-1.0.0.0-x86_64-linux-gnu.tar.gz
+COINGITHUB=https://github.com/Bitcoin-Confidential/BitcoinC-Core/releases/download/v1.0.1/bitcoinc-1.0.1-x86_64-linux-gnu.tar.gz
+COINDSRCLOC=/bitcoinc-1.0.1/bin/
 COINDSRC=/home/${NODE_USER}/code
 CONF=release
 COINDAEMON=${FORK}d

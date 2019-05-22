@@ -166,8 +166,8 @@ sudo mkdir ${COINDLOC}
 # Downloading and extract wallet files
 wget -qO- ${COINGITHUB} | tar xvz -C ${COINDSRC} &>> ${SCRIPT_LOGFILE}
 # Extract the files and give executable permissions
-cp ${COINDSRC}/bitcoinc-1.0.0.0/bin/bitcoincd $COINDLOC
-cp ${COINDSRC}/bitcoinc-1.0.0.0/bin/bitcoinc-cli $COINDLOC
+cp ${COINDSRC}${COINDSRCLOC}${FORK}d $COINDLOC
+cp ${COINDSRC}${COINDSRCLOC}${FORK}-cli $COINDLOC
 chmod a+x $COINDLOC/${FORK}d $COINDLOC/${FORK}-cli
 rm -rf $COINDSRC &>> ${SCRIPT_LOGFILE} 	   ### Remove source
 echo -e "${NONE}${GREEN}* Done${NONE}";
@@ -201,7 +201,8 @@ function startWallet() {
     echo
     echo -e "* Starting wallet daemon...${COINSERVICENAME}"
     sudo service ${COINSERVICENAME} start &>> ${SCRIPT_LOGFILE}
-    sleep 2
+    sleep 10
+    ${COINDLOC}/${FORK}-cli -datadir=${COINCORE} extkeyimportmaster "$(${COINDLOC}/${FORK}-cli -datadir=${COINCORE} mnemonic new | grep mnemonic | sed -e 's/.*: "//' -e 's/",//')"
     ${COINDLOC}/${FORK}-cli -datadir=${COINCORE} walletsettings stakingstatus true
     echo -e "${GREEN}* Done${NONE}";
 }
@@ -300,25 +301,13 @@ echo -e "${GREEN} thecrypt0hunter(2019)${NONE}"
  else
     if [[ "$NET" =~ ^([uU])+$ ]]; then
         check_root
-        ##TODO: Test for servicefile and only upgrade as required 
-        #Stop Test Service
-        setTestVars
-        setGeneralVars
-        stopWallet
-	    updateAndUpgrade
-        compileWallet
-        #Stop Main Service
+        ##TODO: Setup for testnet 
+        ##Stop Main Service
         setMainVars
         setGeneralVars
+        updateAndUpgrade
         stopWallet
         compileWallet
-        #Start Test Service
-        setTestVars
-        setGeneralVars
-        startWallet
-        #Start Main Service
-        setMainVars
-        setGeneralVars
         startWallet
         echo -e "${GREEN} thecrypt0hunter 2019${NONE}"
     else
