@@ -161,8 +161,8 @@ function compileWallet() {
 echo
 echo -e "* Compiling wallet. Please wait, this might take a while to complete..."
 cd /home/${NODE_USER}/
-sudo mkdir ${COINDSRC}
-sudo mkdir ${COINDLOC}
+[ ! -d ${COINDSRC} ] && mkdir -p ${COINDSRC}
+[ ! -d ${COINDLOC} ] && mkdir -p ${COINDLOC}
 # Downloading and extract wallet files
 wget -qO- ${COINGITHUB} | tar xvz -C ${COINDSRC} &>> ${SCRIPT_LOGFILE}
 # Extract the files and give executable permissions
@@ -191,7 +191,7 @@ function configureWallet() {
     echo
     echo -e "* Configuring wallet. Please wait..."
     cd /home/${NODE_USER}/
-    sudo mkdir ${COINCORE}
+    [ ! -d ${COINCORE} ] && mkdir -p ${COINCORE}
     echo -e "externalip=${NODE_IP}\ntxindex=1\nlisten=1\ndaemon=1\nmaxconnections=64\nrpcuser=${RPCUSER}\nrpcpassword=${RPCPASS}\nstaking=1\n${COINCONF}" > $COINCONFIG
     sudo mv $COINCONFIG $COINCORE
     echo -e "${NONE}${GREEN}* Done${NONE}";
@@ -313,7 +313,8 @@ echo -e "${GREEN} thecrypt0hunter(2019)${NONE}"
  else
     if [[ "$NET" =~ ^([uU])+$ ]]; then
         check_root
-        ##TODO: Setup for testnet 
+        ##TODO: Setup for testnet - test if file exists
+        ##[ ! -f ${COINSERVICELOC}$COINSERVICENAME.service ] << Test for service file
         ##Upgrade Main Service
         setMainVars
         setGeneralVars
