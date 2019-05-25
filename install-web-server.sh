@@ -1,6 +1,6 @@
 #!/bin/bash
 # =================== YOUR DATA ========================
-WEBSERVERBASHFILE="bash <( curl -s https://raw.githubusercontent.com/coldstake/server/master/install-web-server.sh )"
+#"bash <( curl -s https://raw.githubusercontent.com/coldstake/server/master/install-web-server.sh )"
 SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_END_DATE="2020-05-31"
 SERVICE_DESC=" Coldstake.co.in service. Service ends on "$SERVICE_END_DATE

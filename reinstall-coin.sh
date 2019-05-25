@@ -25,8 +25,3 @@ wget ${COINSERVICECONFIG} -O /home/${USER}/config-${coin}.sh
 chmod +x /home/${USER}/install-coin.sh
 cd /home/${USER}/
 ./install-coin.sh -f ${coin} -u ${RPCUSER} -p ${RPCPASS} -n ${NET}
-
-# Display information
-echo
-echo "Website URL: "${DNS_NAME}
-echo "Requires keys.php, btcpayserver.pri & pub in /var/secure/ - run transfer.sh"
