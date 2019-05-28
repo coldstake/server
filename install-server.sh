@@ -14,7 +14,7 @@ if [ "$(id -u)" != "0" ]; then
 fi
 
 read -p "Which coin (bitcoinc)? " coin
-read -p "Mainnet (m) or Testnet (t)? " NET
+read -p "Mainnet (m) or Testnet (t)? " net
 # =================== YOUR DATA ========================
 SERVER_NAME="${coin}.coldstake.co.in"
 REDIRECTURL="http:\/\/${SERVER_NAME}\/activate.php"
@@ -423,7 +423,7 @@ wget ${COINSERVICEINSTALLER} -O /home/${USER}/install-coin.sh
 wget ${COINSERVICECONFIG} -O /home/${USER}/config-${coin}.sh
 chmod +x /home/${USER}/install-coin.sh
 cd /home/${USER}/
-./install-coin.sh -f ${coin} -u ${RPCUSER} -p ${RPCPASS} -n ${NET}
+./install-coin.sh -f ${coin} -u ${RPCUSER} -p ${RPCPASS} -n ${net}
 
 # Display information
 echo
