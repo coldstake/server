@@ -1,6 +1,6 @@
 #!/bin/bash
 # =================== YOUR DATA ========================
-#"bash <( curl -s https://raw.githubusercontent.com/coldstake/server/master/install-web-server.sh )"
+#"bash <( curl -s https://raw.githubusercontent.com/coldstake/server/master/install-server.sh )"
 SERVER_IP=$(curl --silent ipinfo.io/ip)
 SERVICE_END_DATE="2020-05-31"
 SERVICE_DESC=" Coldstake.co.in service. Service ends on "$SERVICE_END_DATE
@@ -221,7 +221,7 @@ fi
 apt-get install -y --force-yes php7.0-cli php7.0-dev \
 php-sqlite3 php-gd \
 php-curl php7.0-curl php7.0-dev \
-php-imap php-mysql php-memcached php-mcrypt php-mbstring \
+php-imap php-mysql php-memcached php-php7.0-mcrypt php-mbstring \
 php-xml php-imagick php7.0-zip php7.0-bcmath php-soap \
 php7.0-intl php7.0-readline
 
